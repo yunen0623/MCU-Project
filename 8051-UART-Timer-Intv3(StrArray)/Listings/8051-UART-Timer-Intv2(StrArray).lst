@@ -1,0 +1,204 @@
+C51 COMPILER V9.54   8051_UART_TIMER_INTV2_STRARRAY_                                       11/15/2021 15:20:46 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 8051_UART_TIMER_INTV2_STRARRAY_
+OBJECT MODULE PLACED IN .\Objects\8051-UART-Timer-Intv2(StrArray).obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE 8051-UART-Timer-Intv2(StrArray).c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTE
+                    -XTEND PRINT(.\Listings\8051-UART-Timer-Intv2(StrArray).lst) TABS(2) OBJECT(.\Objects\8051-UART-Timer-Intv2(StrArray).obj
+                    -)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <stdio.h>
+   3          #include <string.h>
+   4          #define LED P1
+   5          #define DataLengthg 7
+   6          #define DataLengthy 8
+   7          #define DataLengthr 5
+   8          #define DataLengths 6
+   9          void delay1ms(int x);
+  10          unsigned char green[ ]={0x47,0x72,0x65,0x65,0x6e,0x0D,0x0A}; //Green16秈
+  11          unsigned char yellow[ ]={0x59,0x65,0x6c,0x6c,0x6f,0x77,0x0D,0x0A}; //Yellow
+  12          unsigned char red[ ]={0x52,0x65,0x64,0x0D,0x0A};  //Red
+  13          unsigned char stop[ ]={0x53,0x74,0x6f,0x70,0x0D,0x0A}; //Stop
+  14          unsigned char ArrayCount = 0;
+  15          unsigned char iCount=0;
+  16          //unsigned char DataLength;
+  17          unsigned char IfTx=0;
+  18          char c,a=0;
+  19          int t,i,b;
+  20          main()
+  21          {
+  22   1        IE=0x93; // INT0 UART TIMER0
+  23   1        IP=0x10; //UARTㄣΤ程蔼纔舦
+  24   1        IT0=0; //璽絫い耞
+  25   1        //-------------------Timer0 set-----------------------//
+  26   1        TMOD=0x21; //Timer0 gate c/t mode1    //TIMER 家Α2
+  27   1        TH0=(65536-46080)/256;
+  28   1        TL0=(65536-46080)%256;
+  29   1        //-------------------UARR set------------------------//
+  30   1        SCON=0x50; //﹃家Α1
+  31   1        PCON &= 0x7F; //SMOD=0
+  32   1        TH1=TL1=0xFD; //纉瞯9600
+  33   1        //TMOD |= 0X20; //Timer1家Α2
+  34   1        //---------------------------------------------------//
+  35   1        TR0=1; //T0 い耞秨﹍
+  36   1        TR1 =1; // UART TIMER1秨﹍
+  37   1        while(1);
+  38   1      }
+  39          
+  40          void INT0Int(void) interrupt 0
+  41          {
+  42   1        int i;
+  43   1        for(i=0;i<5;i++)
+  44   1        {
+  45   2          LED=0xED;
+  46   2          delay1ms(250);
+  47   2          LED=0xFF;
+  48   2          delay1ms(250);
+  49   2          //i++;
+  50   2        }
+  51   1        //i=0;
+  52   1      }
+  53          
+C51 COMPILER V9.54   8051_UART_TIMER_INTV2_STRARRAY_                                       11/15/2021 15:20:46 PAGE 2   
+
+  54          void Timer0Int(void) interrupt 1
+  55          {
+  56   1        TH0=(65536-46080)/256;
+  57   1        TL0=(65536-4608)%256; //0.05S
+  58   1        if(++iCount>=20) //1s
+  59   1        {
+  60   2          iCount=0;
+  61   2          t++;
+  62   2          //b++;
+  63   2        }
+  64   1        switch (t)
+  65   1        {
+  66   2          case(0):
+  67   2            LED=0xDE;
+  68   2            break;
+  69   2          case(3):
+  70   2            LED=0xDD;
+  71   2            break;
+  72   2          case(5):
+  73   2            LED=0xF3;
+  74   2            break;
+  75   2          case(8):
+  76   2            LED=0xEB;
+  77   2            break;
+  78   2        }
+  79   1        if(t>=10)
+  80   1        {
+  81   2          t=0;
+  82   2          //b=0;
+  83   2        }
+  84   1      }
+  85          
+  86          void UARTInt(void) interrupt 4
+  87          {
+  88   1        if(RI)
+  89   1        {
+  90   2          RI=0;
+  91   2          c=SBUF;
+  92   2          switch(c)
+  93   2          {
+  94   3            case 'g':
+  95   3              P1=0xDE;
+  96   3              IfTx=1;
+  97   3              SBUF=green[0];
+  98   3              break;
+  99   3            case 'y':
+ 100   3              P1=0xED;
+ 101   3              IfTx=1;
+ 102   3              SBUF=yellow[0];
+ 103   3              break;
+ 104   3            case 'r':
+ 105   3              P1=0xF3;
+ 106   3              IfTx=1;
+ 107   3              SBUF=red[0];
+ 108   3              break;
+ 109   3            case 's':
+ 110   3              P1=0xFF;
+ 111   3              IfTx=1;
+ 112   3              SBUF=stop[0];
+ 113   3              break;
+ 114   3          }
+ 115   2          
+C51 COMPILER V9.54   8051_UART_TIMER_INTV2_STRARRAY_                                       11/15/2021 15:20:46 PAGE 3   
+
+ 116   2        }
+ 117   1        
+ 118   1        if(TI)
+ 119   1        {
+ 120   2          TI=0;
+ 121   2          if(IfTx==0) return;
+ 122   2          switch(c)
+ 123   2          {
+ 124   3            case 'g':
+ 125   3              ArrayCount++;
+ 126   3                if(ArrayCount >= DataLengthg) //Repeat
+ 127   3                {
+ 128   4                  ArrayCount = 0; //Check and repeatly Tx
+ 129   4                  IfTx=0;
+ 130   4                }
+ 131   3                else
+ 132   3                  SBUF = green[ArrayCount];
+ 133   3                break;
+ 134   3            case 'y' :
+ 135   3              ArrayCount++;
+ 136   3                if(ArrayCount >= DataLengthy) //Repeat
+ 137   3                {
+ 138   4                  ArrayCount = 0; //Check and repeatly Tx
+ 139   4                  IfTx=0;
+ 140   4                }
+ 141   3                else
+ 142   3                  SBUF = yellow[ArrayCount];
+ 143   3                break;
+ 144   3            case 'r' :
+ 145   3              ArrayCount++;
+ 146   3                if(ArrayCount >= DataLengthr) //Repeat
+ 147   3                {
+ 148   4                  ArrayCount = 0; //Check and repeatly Tx
+ 149   4                  IfTx=0;
+ 150   4                }
+ 151   3                else
+ 152   3                  SBUF = red[ArrayCount];
+ 153   3                break;
+ 154   3            case 's' :
+ 155   3              ArrayCount++;
+ 156   3                if(ArrayCount >= DataLengths) //Repeat
+ 157   3                {
+ 158   4                  ArrayCount = 0; //Check and repeatly Tx
+ 159   4                  IfTx =0;
+ 160   4                }
+ 161   3                else
+ 162   3                  SBUF = stop[ArrayCount];
+ 163   3                break;
+ 164   3          }
+ 165   2        }
+ 166   1      }
+ 167          
+ 168          void delay1ms(int x)
+ 169          {
+ 170   1        int i,j;
+ 171   1        for(i=0;i<x;i++)
+ 172   1        for(j=0;j<120;j++);
+ 173   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    447    ----
+C51 COMPILER V9.54   8051_UART_TIMER_INTV2_STRARRAY_                                       11/15/2021 15:20:46 PAGE 4   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     37       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

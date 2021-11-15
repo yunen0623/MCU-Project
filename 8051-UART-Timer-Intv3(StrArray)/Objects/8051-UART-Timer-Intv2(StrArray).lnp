@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\8051-UART-Timer-Intv2(StrArray).obj" 
+TO ".\Objects\8051-UART-Timer-Intv2(StrArray)" 
+PRINT(".\Listings\8051-UART-Timer-Intv2(StrArray).m51")
