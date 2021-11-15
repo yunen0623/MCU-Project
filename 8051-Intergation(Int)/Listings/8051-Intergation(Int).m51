@@ -1,0 +1,178 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/15/2021  15:17:04  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\8051-Intergation(Int).obj TO .\Objects\8051-Intergation(Int
+>> ) PRINT (.\Listings\8051-Intergation(Int).m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\8051-Intergation(Int).obj (8051_INTERGATION_INT_)
+
+
+LINK MAP OF MODULE:  .\Objects\8051-Intergation(Int) (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         _DATA_GROUP_
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+                    0006H     07FAH                  *** GAP ***
+            CODE    0800H     0066H     UNIT         ?PR?_RUNLED?8051_INTERGATION_INT_
+            CODE    0866H     0049H     UNIT         ?PR?INT0INT?8051_INTERGATION_INT_
+            CODE    08AFH     0026H     UNIT         ?PR?_DELAY1MS?8051_INTERGATION_INT_
+            CODE    08D5H     0014H     UNIT         ?PR?MAIN?8051_INTERGATION_INT_
+            CODE    08E9H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\8051-Intergation(Int) (?C_STARTUP)
+
+
+SEGMENT                                       DATA_GROUP 
+  +--> CALLED SEGMENT                       START    LENGTH
+-----------------------------------------------------------
+?C_C51STARTUP                               -----    -----
+  +--> ?PR?MAIN?8051_INTERGATION_INT_
+
+?PR?MAIN?8051_INTERGATION_INT_              -----    -----
+  +--> ?PR?_DELAY1MS?8051_INTERGATION_INT_
+
+*** NEW ROOT ***************************************************
+
+?PR?INT0INT?8051_INTERGATION_INT_           0008H    0002H
+  +--> ?PR?_RUNLED?8051_INTERGATION_INT_
+
+?PR?_RUNLED?8051_INTERGATION_INT_           000AH    0002H
+  +--> ?PR?_DELAY1MS?8051_INTERGATION_INT_
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2021  15:17:04  PAGE 2
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\8051-Intergation(Int) (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:08E9H         SEGMENT       ?C_C51STARTUP
+  I:000CH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:08ECH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:08E9H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:08E9H         LINE#         133
+  C:08EBH         LINE#         134
+  C:08ECH         LINE#         135
+  C:08EDH         LINE#         136
+  C:08EFH         LINE#         185
+  C:08F2H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        8051_INTERGATION_INT_
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:0800H         PUBLIC        _runled
+  D:00A8H         PUBLIC        IE
+  C:08AFH         PUBLIC        _delay1ms
+  C:08D5H         PUBLIC        main
+  C:0866H         PUBLIC        INT0Int
+  B:0088H.0       PUBLIC        IT0
+  -------         PROC          MAIN
+  C:08D5H         LINE#         6
+  C:08D5H         LINE#         7
+  C:08D5H         LINE#         8
+  C:08D8H         LINE#         9
+  C:08DAH         LINE#         10
+  C:08DDH         LINE#         11
+  C:08DDH         LINE#         12
+  C:08DDH         LINE#         13
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2021  15:17:04  PAGE 3
+
+
+  C:08E4H         LINE#         14
+  C:08E7H         LINE#         15
+  -------         ENDPROC       MAIN
+  -------         PROC          INT0INT
+  -------         DO            
+  D:0008H         SYMBOL        saveLED
+  -------         ENDDO         
+  C:0866H         LINE#         18
+  C:0883H         LINE#         20
+  C:088AH         LINE#         21
+  C:0891H         LINE#         22
+  C:0894H         LINE#         23
+  -------         ENDPROC       INT0INT
+  -------         PROC          _RUNLED
+  D:0006H         SYMBOL        x
+  -------         DO            
+  D:000AH         SYMBOL        i
+  D:0005H         SYMBOL        j
+  -------         ENDDO         
+  C:0800H         LINE#         25
+  C:0800H         LINE#         26
+  C:0800H         LINE#         29
+  C:0803H         LINE#         30
+  C:0811H         LINE#         31
+  C:0811H         LINE#         32
+  C:0826H         LINE#         33
+  C:082EH         LINE#         34
+  C:0831H         LINE#         35
+  C:083FH         LINE#         36
+  C:083FH         LINE#         37
+  C:0854H         LINE#         38
+  C:085CH         LINE#         39
+  C:085FH         LINE#         40
+  -------         ENDPROC       _RUNLED
+  -------         PROC          _DELAY1MS
+  D:0006H         SYMBOL        x
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:08AFH         LINE#         43
+  C:08AFH         LINE#         44
+  C:08AFH         LINE#         46
+  C:08BFH         LINE#         47
+  C:08D4H         LINE#         48
+  -------         ENDPROC       _DELAY1MS
+  -------         ENDMOD        8051_INTERGATION_INT_
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00FBH BYTE (12%) *
+******************************************************************************
+
+Program Size: data=13.0 xdata=0 code=251
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\8051-Intergation(Int).obj" 
+TO ".\Objects\8051-Intergation(Int)" 
+PRINT(".\Listings\8051-Intergation(Int).m51")
