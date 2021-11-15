@@ -1,0 +1,63 @@
+C51 COMPILER V9.54   INTSEVEN_SEGMENT_DISPLAY                                              11/15/2021 15:08:26 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE INTSEVEN_SEGMENT_DISPLAY
+OBJECT MODULE PLACED IN .\Objects\IntSeven-segment display.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE IntSeven-segment display.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND P
+                    -RINT(.\Listings\IntSeven-segment display.lst) TABS(2) OBJECT(.\Objects\IntSeven-segment display.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #define LED P1
+   3          #define SEG P2
+   4          void delay1ms(int x);
+   5          char code TAB[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x83,0xf8,0x80,0x98}; //前4為0-4,後為5-9
+   6          
+   7          main()
+   8          {
+   9   1        int i;
+  10   1        IE = 0X81;
+  11   1        IT0 =0;
+  12   1        while(1)
+  13   1        {
+  14   2          for(i=0;i<10;i++)
+  15   2          {
+  16   3            SEG=TAB[i]; //顯示0-9(上數)
+  17   3            delay1ms(500);  //延遲500ms*1m=0.5s
+  18   3          }
+  19   2        }
+  20   1      }
+  21          
+  22          void INT0Int(void) interrupt 0
+  23          {
+  24   1        int i;
+  25   1        for(i=9;i>=0;i--) //9-0(下數)
+  26   1        {
+  27   2          SEG=TAB[i];
+  28   2          delay1ms(250);
+  29   2          SEG=0XFF; //關閉七節顯示器
+  30   2          delay1ms(250);
+  31   2        }
+  32   1      }
+  33          
+  34          void delay1ms(int x)
+  35          {
+  36   1        int i,j;
+  37   1        for(i=0;i<x;i++)
+  38   1        for(j=0;j<120;j++);
+  39   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    204    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
