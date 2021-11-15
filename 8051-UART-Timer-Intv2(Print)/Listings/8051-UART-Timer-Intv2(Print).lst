@@ -1,0 +1,142 @@
+C51 COMPILER V9.54   8051_UART_TIMER_INTV2_PRINT_                                          11/15/2021 15:19:47 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 8051_UART_TIMER_INTV2_PRINT_
+OBJECT MODULE PLACED IN .\Objects\8051-UART-Timer-Intv2(Print).obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE 8051-UART-Timer-Intv2(Print).c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTE
+                    -ND PRINT(.\Listings\8051-UART-Timer-Intv2(Print).lst) TABS(2) OBJECT(.\Objects\8051-UART-Timer-Intv2(Print).obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <stdio.h>
+   3          #include <string.h>
+   4          #define LED P1
+   5          void delay1ms(int x);
+   6          unsigned char iCount=0;
+   7          char c,a=0;
+   8          int t,i;
+   9          main()
+  10          {
+  11   1        IE=0x93; // INT0 UART TIMER0
+  12   1        IP=0x10; //UARTㄣΤ程蔼纔舦
+  13   1        IT0=0; //璽絫い耞
+  14   1        //-------------------Timer0 set-----------------------//
+  15   1        TMOD=0x21; //Timer0 gate c/t mode1    //TIMER 家Α2
+  16   1        TH0=(65536-46080)/256;
+  17   1        TL0=(65536-46080)%256;
+  18   1        //-------------------UARR set------------------------//
+  19   1        SCON=0x50; //﹃家Α1
+  20   1        PCON &= 0x7F; //SMOD=0
+  21   1        TH1=TL1=0xFD; //纉瞯9600
+  22   1        //TMOD |= 0X20; //Timer1家Α2
+  23   1        //---------------------------------------------------//
+  24   1        TR0=1; //T0 い耞秨﹍
+  25   1        TR1 =1; // UART TIMER1秨﹍
+  26   1        while(1);
+  27   1      }
+  28          
+  29          void INT0Int(void) interrupt 0
+  30          {
+  31   1        int i;
+  32   1        while(i<5)
+  33   1        {
+  34   2          LED=0xED;
+  35   2          delay1ms(250);
+  36   2          LED=0xFF;
+  37   2          delay1ms(250);
+  38   2          i++;
+  39   2        }
+  40   1        i=0;
+  41   1      }
+  42          
+  43          void Timer0Int(void) interrupt 1
+  44          {
+  45   1        TH0=(65536-46080)/256;
+  46   1        TL0=(65536-4608)%256; //0.05S
+  47   1        if(++iCount>=20) //1s
+  48   1        {
+  49   2          iCount=0;
+  50   2          t++;
+  51   2        }
+  52   1        switch (t)
+  53   1        {
+  54   2          case(0):
+C51 COMPILER V9.54   8051_UART_TIMER_INTV2_PRINT_                                          11/15/2021 15:19:47 PAGE 2   
+
+  55   2            LED=0xDE;
+  56   2            break;
+  57   2          case(5):
+  58   2            LED=0xDD;
+  59   2            break;
+  60   2          case(8):
+  61   2            LED=0xF3;
+  62   2            break;
+  63   2          case(10):
+  64   2            LED=0xEB;
+  65   2            break;
+  66   2        }
+  67   1        if(t>=12)
+  68   1        {
+  69   2          t=0;
+  70   2        }
+  71   1      }
+  72          
+  73          void UARTInt(void) interrupt 4
+  74          {
+  75   1        
+  76   1        if (RI==1)
+  77   1        {
+  78   2        RI=0;
+  79   2        c=SBUF;
+  80   2        switch(c)
+  81   2        {
+  82   3          case 'g':
+  83   3            P1=0xDE;
+  84   3            TI=1;
+  85   3            printf ("green"); 
+  86   3            break;
+  87   3      
+  88   3          case 'y':
+  89   3            P1=0xED;
+  90   3            TI=1;
+  91   3            printf ("yellow");
+  92   3            break;
+  93   3      
+  94   3          case 'r':
+  95   3            P1=0xF3;
+  96   3            TI=1;
+  97   3            printf ("red");
+  98   3            break;
+  99   3      
+ 100   3          case 's':
+ 101   3            P1=0xFF;
+ 102   3            TI=1;
+ 103   3            printf ("stop");
+ 104   3            break;
+ 105   3          }
+ 106   2        }
+ 107   1      }
+ 108          
+ 109          void delay1ms(int x)
+ 110          {
+ 111   1        int i,j;
+ 112   1        for(i=0;i<x;i++)
+ 113   1        for(j=0;j<120;j++);
+ 114   1      }
+
+
+C51 COMPILER V9.54   8051_UART_TIMER_INTV2_PRINT_                                          11/15/2021 15:19:47 PAGE 3   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    406    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,318 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/15/2021  15:19:47  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\8051-UART-Timer-Intv2(Print).obj TO .\Objects\8051-UART-Tim
+>> er-Intv2(Print) PRINT (.\Listings\8051-UART-Timer-Intv2(Print).m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\8051-UART-Timer-Intv2(Print).obj (8051_UART_TIMER_INTV2_PRINT_)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (PRINTF)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CCASE)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (PUTCHAR)
+
+
+LINK MAP OF MODULE:  .\Objects\8051-UART-Timer-Intv2(Print) (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0016H     UNIT         _DATA_GROUP_
+                    001EH     0002H                  *** GAP ***
+            BIT     0020H.0   0001H.1   UNIT         _BIT_GROUP_
+                    0021H.1   0000H.7                *** GAP ***
+            DATA    0022H     0007H     UNIT         ?DT?8051_UART_TIMER_INTV2_PRINT_
+            IDATA   0029H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+                    0006H     0005H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     0015H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+                    0026H     07DAH                  *** GAP ***
+            CODE    0800H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    0B5CH     008EH     UNIT         ?C?LIB_CODE
+            CODE    0BEAH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0C76H     0086H     UNIT         ?PR?UARTINT?8051_UART_TIMER_INTV2_PRINT_
+            CODE    0CFCH     0069H     UNIT         ?PR?INT0INT?8051_UART_TIMER_INTV2_PRINT_
+            CODE    0D65H     005EH     UNIT         ?PR?TIMER0INT?8051_UART_TIMER_INTV2_PRINT_
+            CODE    0DC3H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    0DEAH     0026H     UNIT         ?PR?_DELAY1MS?8051_UART_TIMER_INTV2_PRINT_
+            CODE    0E10H     0023H     UNIT         ?PR?MAIN?8051_UART_TIMER_INTV2_PRINT_
+            CODE    0E33H     0016H     UNIT         ?CO?8051_UART_TIMER_INTV2_PRINT_
+            CODE    0E49H     0007H     UNIT         ?C_INITSEG
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2021  15:19:47  PAGE 2
+
+
+OVERLAY MAP OF MODULE:   .\Objects\8051-UART-Timer-Intv2(Print) (?C_STARTUP)
+
+
+SEGMENT                                             BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH     START    LENGTH
+------------------------------------------------------------------------------------
+?C_C51STARTUP                                    -----    -----      -----    -----
+  +--> ?PR?MAIN?8051_UART_TIMER_INTV2_PRINT_
+  +--> ?C_INITSEG
+
+*** NEW ROOT ***************************************************
+
+?PR?INT0INT?8051_UART_TIMER_INTV2_PRINT_         -----    -----      0008H    0002H
+  +--> ?PR?_DELAY1MS?8051_UART_TIMER_INTV2_P...
+
+*** NEW ROOT ***************************************************
+
+?PR?UARTINT?8051_UART_TIMER_INTV2_PRINT_         -----    -----      -----    -----
+  +--> ?CO?8051_UART_TIMER_INTV2_PRINT_
+  +--> ?PR?PRINTF?PRINTF
+
+?PR?PRINTF?PRINTF                                0020H.0  0001H.1    000AH    0014H
+  +--> ?PR?PUTCHAR?PUTCHAR
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\8051-UART-Timer-Intv2(Print) (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0BEAH         SEGMENT       ?C_C51STARTUP
+  I:0029H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0BEDH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0BEAH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2021  15:19:47  PAGE 3
+
+
+  C:0BEAH         LINE#         133
+  C:0BECH         LINE#         134
+  C:0BEDH         LINE#         135
+  C:0BEEH         LINE#         136
+  C:0BF0H         LINE#         185
+  C:0BF3H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        8051_UART_TIMER_INTV2_PRINT_
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:0DEAH         PUBLIC        _delay1ms
+  C:0E10H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  C:0CFCH         PUBLIC        INT0Int
+  D:008CH         PUBLIC        TH0
+  B:0088H.0       PUBLIC        IT0
+  D:008DH         PUBLIC        TH1
+  D:008AH         PUBLIC        TL0
+  D:008BH         PUBLIC        TL1
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  D:0022H         PUBLIC        a
+  C:0D65H         PUBLIC        Timer0Int
+  D:0023H         PUBLIC        c
+  D:0024H         PUBLIC        i
+  C:0C76H         PUBLIC        UARTInt
+  D:0026H         PUBLIC        t
+  D:0028H         PUBLIC        iCount
+  -------         PROC          MAIN
+  C:0E10H         LINE#         9
+  C:0E10H         LINE#         10
+  C:0E10H         LINE#         11
+  C:0E13H         LINE#         12
+  C:0E16H         LINE#         13
+  C:0E18H         LINE#         15
+  C:0E1BH         LINE#         16
+  C:0E1EH         LINE#         17
+  C:0E21H         LINE#         19
+  C:0E24H         LINE#         20
+  C:0E27H         LINE#         21
+  C:0E2DH         LINE#         24
+  C:0E2FH         LINE#         25
+  C:0E31H         LINE#         26
+  -------         ENDPROC       MAIN
+  -------         PROC          INT0INT
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:0CFCH         LINE#         29
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2021  15:19:47  PAGE 4
+
+
+  C:0D19H         LINE#         32
+  C:0D26H         LINE#         33
+  C:0D26H         LINE#         34
+  C:0D29H         LINE#         35
+  C:0D30H         LINE#         36
+  C:0D33H         LINE#         37
+  C:0D3AH         LINE#         38
+  C:0D42H         LINE#         39
+  C:0D44H         LINE#         40
+  C:0D4AH         LINE#         41
+  -------         ENDPROC       INT0INT
+  -------         PROC          TIMER0INT
+  C:0D65H         LINE#         43
+  C:0D69H         LINE#         45
+  C:0D6CH         LINE#         46
+  C:0D6FH         LINE#         47
+  C:0D78H         LINE#         48
+  C:0D78H         LINE#         49
+  C:0D7BH         LINE#         50
+  C:0D83H         LINE#         51
+  C:0D83H         LINE#         52
+  C:0D99H         LINE#         53
+  C:0D99H         LINE#         54
+  C:0D99H         LINE#         55
+  C:0D9CH         LINE#         56
+  C:0D9EH         LINE#         57
+  C:0D9EH         LINE#         58
+  C:0DA1H         LINE#         59
+  C:0DA3H         LINE#         60
+  C:0DA3H         LINE#         61
+  C:0DA6H         LINE#         62
+  C:0DA8H         LINE#         63
+  C:0DA8H         LINE#         64
+  C:0DABH         LINE#         65
+  C:0DABH         LINE#         66
+  C:0DABH         LINE#         67
+  C:0DB8H         LINE#         68
+  C:0DB8H         LINE#         69
+  C:0DBEH         LINE#         70
+  C:0DBEH         LINE#         71
+  -------         ENDPROC       TIMER0INT
+  -------         PROC          UARTINT
+  C:0C76H         LINE#         73
+  C:0C93H         LINE#         76
+  C:0C96H         LINE#         77
+  C:0C96H         LINE#         78
+  C:0C98H         LINE#         79
+  C:0C9BH         LINE#         80
+  C:0CACH         LINE#         81
+  C:0CACH         LINE#         82
+  C:0CACH         LINE#         83
+  C:0CAFH         LINE#         84
+  C:0CB1H         LINE#         85
+  C:0CB7H         LINE#         86
+  C:0CB9H         LINE#         88
+  C:0CB9H         LINE#         89
+  C:0CBCH         LINE#         90
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2021  15:19:47  PAGE 5
+
+
+  C:0CBEH         LINE#         91
+  C:0CC4H         LINE#         92
+  C:0CC6H         LINE#         94
+  C:0CC6H         LINE#         95
+  C:0CC9H         LINE#         96
+  C:0CCBH         LINE#         97
+  C:0CD1H         LINE#         98
+  C:0CD3H         LINE#         100
+  C:0CD3H         LINE#         101
+  C:0CD6H         LINE#         102
+  C:0CD8H         LINE#         103
+  C:0CE1H         LINE#         104
+  C:0CE1H         LINE#         105
+  C:0CE1H         LINE#         106
+  C:0CE1H         LINE#         107
+  -------         ENDPROC       UARTINT
+  -------         PROC          _DELAY1MS
+  D:0006H         SYMBOL        x
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0DEAH         LINE#         109
+  C:0DEAH         LINE#         110
+  C:0DEAH         LINE#         112
+  C:0DFAH         LINE#         113
+  C:0E0FH         LINE#         114
+  -------         ENDPROC       _DELAY1MS
+  -------         ENDMOD        8051_UART_TIMER_INTV2_PRINT_
+
+  -------         MODULE        PRINTF
+  D:000AH         PUBLIC        ?_PRINTF517?BYTE
+  D:000AH         PUBLIC        ?_PRINTF?BYTE
+  D:000AH         PUBLIC        ?_SPRINTF517?BYTE
+  D:000AH         PUBLIC        ?_SPRINTF?BYTE
+  C:0862H         PUBLIC        _PRINTF
+  C:0862H         PUBLIC        _PRINTF517
+  C:085CH         PUBLIC        _SPRINTF
+  C:085CH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
+
+  -------         MODULE        ?C?CLDPTR
+  C:0B5CH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0B75H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:0BA2H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:0BB4H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2021  15:19:47  PAGE 6
+
+
+  -------         MODULE        ?C?CCASE
+  C:0BC4H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        PUTCHAR
+  C:0DC3H         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01CAH BYTE (22%) *
+******************************************************************************
+
+Program Size: data=39.1 xdata=0 code=1628
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
