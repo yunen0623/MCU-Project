@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\newCAN.obj" 
+TO ".\Objects\newCAN" 
+PRINT(".\Listings\newCAN.m51")
