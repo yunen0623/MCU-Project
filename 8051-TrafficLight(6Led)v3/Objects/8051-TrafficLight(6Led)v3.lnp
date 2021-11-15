@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\8051-TrafficLight(6Led)v3.obj" 
+TO ".\Objects\8051-TrafficLight(6Led)v3" 
+PRINT(".\Listings\8051-TrafficLight(6Led)v3.m51")
