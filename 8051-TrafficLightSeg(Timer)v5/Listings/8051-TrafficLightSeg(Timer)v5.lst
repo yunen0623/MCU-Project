@@ -1,0 +1,123 @@
+C51 COMPILER V9.54   8051_TRAFFICLIGHTSEG_TIMER_V5                                         11/15/2021 15:16:11 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 8051_TRAFFICLIGHTSEG_TIMER_V5
+OBJECT MODULE PLACED IN .\Objects\8051-TrafficLightSeg(Timer)v5.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE 8051-TrafficLightSeg(Timer)v5.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXT
+                    -END PRINT(.\Listings\8051-TrafficLightSeg(Timer)v5.lst) TABS(2) OBJECT(.\Objects\8051-TrafficLightSeg(Timer)v5.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #define SEG P2
+   3          sbit LEDG=P1^0;
+   4          sbit LEDY=P1^1;
+   5          sbit LEDR=P1^2;
+   6          sbit LEDG1=P1^3;
+   7          sbit LEDY1=P1^4;
+   8          sbit LEDR1=P1^5;
+   9          unsigned char count;
+  10          char  secY[3]={0xc0,0xf9,0xa4}; //1-2 redlight sec
+  11          char  secR[3]={0xb0,0x99,0x92}; //3-5 redlight sec
+  12          int t=0; //計算紅綠燈秒數
+  13          int i;
+  14          
+  15          main()
+  16          {
+  17   1        IE=0x88;//TIMER1開啟
+  18   1        TMOD=0x10;  //設定TIMER1
+  19   1        TH1=(65536-46080)/256; //設定TIMER1 約0.05s
+  20   1        TL1=(65536-46080)%256;
+  21   1        TR1=1;//開始計時
+  22   1        while(1)
+  23   1        {
+  24   2          if(t>0 && t<=3)
+  25   2          {
+  26   3            LEDG=0;
+  27   3            LEDY=1;
+  28   3            LEDR=1;
+  29   3            LEDG1=1;
+  30   3            LEDY1=1;
+  31   3            LEDR1=0;
+  32   3            {
+  33   4              for(i=2;i>=0;)
+  34   4              P2=secR[i];
+  35   4              //SEG=0XFF;
+  36   4            }
+  37   3          }
+  38   2          else if(t>3 && t<=5)
+  39   2          {
+  40   3            LEDG=1;
+  41   3            LEDY=0;
+  42   3            LEDR=1;
+  43   3            LEDG1=1;
+  44   3            LEDY1=1;
+  45   3            LEDR1=0;
+  46   3            {
+  47   4              for(i=2;i>=0;)
+  48   4              P2=secY[i];
+  49   4              //SEG=0XFF;
+  50   4            }
+  51   3          }
+  52   2          else if(t>5 && t<=8)
+  53   2          {
+  54   3            LEDG=1;
+C51 COMPILER V9.54   8051_TRAFFICLIGHTSEG_TIMER_V5                                         11/15/2021 15:16:11 PAGE 2   
+
+  55   3            LEDY=1;
+  56   3            LEDR=0;
+  57   3            LEDG1=0;
+  58   3            LEDY1=1;
+  59   3            LEDR1=1;
+  60   3            {
+  61   4              for(i=2;i>=0;)
+  62   4              P2=secR[i];
+  63   4              //SEG=0XFF;
+  64   4            }
+  65   3          }
+  66   2          else if(t>8 && t<=10)
+  67   2          {
+  68   3            LEDG=1;
+  69   3            LEDY=1;
+  70   3            LEDR=0;
+  71   3            LEDG1=1;
+  72   3            LEDY1=0;
+  73   3            LEDR1=1;
+  74   3            {
+  75   4              for(i=2;i>=0;)
+  76   4              P2=secY[i];
+  77   4              //SEG=0XFF;
+  78   4            }
+  79   3          }
+  80   2        }
+  81   1      }
+  82          
+  83          void Timer1Int(void) interrupt 3
+  84          {
+  85   1        TH1=(65536-46080)/256; //??TIMER1 ?0.05s
+  86   1        TL1=(65536-46080)%256;
+  87   1        if(++count>=20) //1s
+  88   1        {
+  89   2          count=0;
+  90   2          i--;
+  91   2          t+=1;// t=t+1 
+  92   2          if(t>11)
+  93   2          {
+  94   3            t=0;
+  95   3          }
+  96   2        }
+  97   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    338    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     11    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

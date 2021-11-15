@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\8051-TrafficLightSeg(Timer)v5.obj" 
+TO ".\Objects\8051-TrafficLightSeg(Timer)v5" 
+PRINT(".\Listings\8051-TrafficLightSeg(Timer)v5.m51")
