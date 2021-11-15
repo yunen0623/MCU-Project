@@ -1,0 +1,71 @@
+C51 COMPILER V9.54   TIMEREXAMPLE                                                          11/15/2021 15:02:35 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE TIMEREXAMPLE
+OBJECT MODULE PLACED IN .\Objects\TimerExample.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE TimerExample.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\TimerExample.lst) TABS(2) OBJECT(.\Objects\TimerExample.obj)
+
+line level    source
+
+   1          #include<reg51.h> 
+   2          #define  LED  P1 
+   3          unsigned char iCount=0;
+   4          
+   5          
+   6          
+   7          main()
+   8          {
+   9   1        IE=0x88; //開啟TIMER1中斷
+  10   1        TMOD = 0x10; //GATE1=0  CT1=0 MODE1=1
+  11   1        TH1=(65536-46080)/256; //0.05秒中斷1次
+  12   1        TL1=(65536-46080)%256;
+  13   1        {
+  14   2          int i;  
+  15   2          unsigned j;
+  16   2          P1=0xFE;
+  17   2            while(1)
+  18   2            {
+  19   3              for(j=0;j<7;j++)
+  20   3              {
+  21   4                for(i=0;i<30000;i++);
+  22   4                P1=(P1<<1)|0x01;
+  23   4              }
+  24   3              for(j=0;j<7;j++)
+  25   3              {
+  26   4                for(i=0;i<30000;i++);
+  27   4                P1=(P1>>1)|0x80;
+  28   4              }
+  29   3          TR1=1;
+  30   3          while(1);
+  31   3            }
+  32   2        }
+  33   1      }
+  34          
+  35          
+  36          void Timer1Int (void) interrupt 3  //Timer1之ISR
+  37          {
+  38   1        TH1=(65536-46080)/256;
+  39   1        TL1=(65536-46080)%256;
+  40   1          if(++iCount>=20) //20次中斷(0.05S/次)約1S
+  41   1          {
+  42   2            iCount=0; //重置中斷次數為0
+  43   2            P1=~P1; //LED反相
+  44   2          }
+  45   1        }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    145    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       4
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   TIMEREXAMPLE                                                          11/15/2021 15:02:35 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

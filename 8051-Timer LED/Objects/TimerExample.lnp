@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\TimerExample.obj" 
+TO ".\Objects\TimerExample" 
+PRINT(".\Listings\TimerExample.m51")
