@@ -1,0 +1,86 @@
+C51 COMPILER V9.54   8051_UARTV1_SENDCHAROPENLED_                                          11/15/2021 15:18:50 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 8051_UARTV1_SENDCHAROPENLED_
+OBJECT MODULE PLACED IN .\Objects\8051-UARTv1(SendCharOpenLed).obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE 8051-UARTv1(SendCharOpenLed).c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTE
+                    -ND PRINT(.\Listings\8051-UARTv1(SendCharOpenLed).lst) TABS(2) OBJECT(.\Objects\8051-UARTv1(SendCharOpenLed).obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <stdio.h>
+   3          #include <string.h>
+   4          char c;
+   5          //unsigned char i;
+   6          void UART_int(void)interrupt 4
+   7          {
+   8   1        c=0;
+   9   1        do
+  10   1        {
+  11   2          while(!RI); 
+  12   2          RI = 0;
+  13   2          if ( SBUF == 0x00 )
+  14   2          break;
+  15   2          c = SBUF;
+  16   2        }
+  17   1        while( c < 2);
+  18   1      
+  19   1        if (RI==1); 
+  20   1        RI=0;
+  21   1        {
+  22   2        switch(c)
+  23   2        {
+  24   3          case 'g':
+  25   3          P1=0xDE;
+  26   3          TI=1;
+  27   3          printf ("green"); 
+  28   3          break;
+  29   3      
+  30   3          case 'y':
+  31   3          P1=0xED;
+  32   3          TI=1;
+  33   3          printf ("yellow");
+  34   3          break;
+  35   3      
+  36   3          case 'r':
+  37   3          P1=0xF3;
+  38   3          TI=1;
+  39   3          printf ("red");
+  40   3          break;
+  41   3      
+  42   3          case 's':
+  43   3          P1=0xFF;
+  44   3          TI=1;
+  45   3          printf ("stop");
+  46   3          break;
+  47   3          }
+  48   2        }
+  49   1      }
+  50          main()
+  51          {
+  52   1        SCON=0x50; 
+  53   1        PCON &= 0X7F; //SMOD=0
+  54   1        TMOD |= 0X20; //Timer1模式2
+C51 COMPILER V9.54   8051_UARTV1_SENDCHAROPENLED_                                          11/15/2021 15:18:50 PAGE 2   
+
+  55   1        TH1=TL1=0XFD; //鮑率9600
+  56   1        IE = 0X90;
+  57   1        TR1 =1; 
+  58   1        //SBUF = TxData[0]; //產生Tx中斷，並進入UART之ISR
+  59   1        while(1);
+  60   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    174    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

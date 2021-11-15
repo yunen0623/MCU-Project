@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\8051-UARTv1(SendCharOpenLed).obj" 
+TO ".\Objects\8051-UARTv1(SendCharOpenLed)" 
+PRINT(".\Listings\8051-UARTv1(SendCharOpenLed).m51")
