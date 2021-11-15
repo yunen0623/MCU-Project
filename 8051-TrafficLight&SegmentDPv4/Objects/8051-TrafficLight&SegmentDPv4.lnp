@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\TFv4.obj" 
+TO ".\Objects\8051-TrafficLight&SegmentDPv4" 
+PRINT(".\Listings\8051-TrafficLight&SegmentDPv4.m51")
