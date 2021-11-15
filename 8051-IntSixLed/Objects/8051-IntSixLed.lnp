@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\IntSixLed.obj" 
+TO ".\Objects\8051-IntSixLed" 
+PRINT(".\Listings\8051-IntSixLed.m51")
