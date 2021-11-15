@@ -1,0 +1,72 @@
+C51 COMPILER V9.54   8051_TRAFFICLIGHT_ARRAYTIME_V1                                        11/15/2021 15:10:36 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 8051_TRAFFICLIGHT_ARRAYTIME_V1
+OBJECT MODULE PLACED IN .\Objects\8051-TrafficLight(ArrayTime)v1.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE 8051-TrafficLight(ArrayTime)v1.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEX
+                    -TEND PRINT(.\Listings\8051-TrafficLight(ArrayTime)v1.lst) TABS(2) OBJECT(.\Objects\8051-TrafficLight(ArrayTime)v1.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #define LED P1
+   3          void delay1(long t);
+   4          void delay2(int x);
+   5          char light[]={0XFE,0XFD,0XFB};
+   6          char time[]={10,8,3};
+   7          unsigned char iCount=0;
+   8          main()
+   9          {
+  10   1        IE=0x82;
+  11   1        TMOD=1;
+  12   1        TH0=(65535-46080)/256;
+  13   1        TL0=(65536-46080)%256;
+  14   1        TR0=1;
+  15   1        P1=0XFD;
+  16   1        delay2(30000);
+  17   1        while(1);
+  18   1      }
+  19          
+  20          void Timer0Int(void) interrupt 1
+  21          {
+  22   1        int i;
+  23   1        TH1=(65535-46080)/256;
+  24   1        TL1=(65536-46080)%256;
+  25   1        if(++iCount==60)
+  26   1        {
+  27   2          iCount=0;
+  28   2          for(i=0;i<3;i++)
+  29   2          {
+  30   3            P1=light[i];
+  31   3            delay1(time[i]);
+  32   3          }
+  33   2        }
+  34   1      }
+  35          void delay1(long t)
+  36          {
+  37   1        t=t*2000;
+  38   1        while(t>0)
+  39   1          t--;
+  40   1      }
+  41          
+  42          void delay2(int x)
+  43          {
+  44   1        int i;
+  45   1        for(i=0;i<x;i++);
+  46   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    241    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7       6
+C51 COMPILER V9.54   8051_TRAFFICLIGHT_ARRAYTIME_V1                                        11/15/2021 15:10:36 PAGE 2   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

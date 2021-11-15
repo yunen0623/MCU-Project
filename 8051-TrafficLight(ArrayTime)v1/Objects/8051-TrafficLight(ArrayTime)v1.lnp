@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\8051-TrafficLight(ArrayTime)v1.obj" 
+TO ".\Objects\8051-TrafficLight(ArrayTime)v1" 
+PRINT(".\Listings\8051-TrafficLight(ArrayTime)v1.m51")
