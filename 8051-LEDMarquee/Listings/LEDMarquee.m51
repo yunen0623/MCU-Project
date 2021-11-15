@@ -1,0 +1,120 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/15/2021  15:04:52  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\LEDMarquee.obj TO .\Objects\LEDMarquee PRINT (.\Listings\LE
+>> DMarquee.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\LEDMarquee.obj (LEDMARQUEE)
+
+
+LINK MAP OF MODULE:  .\Objects\LEDMarquee (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0040H     UNIT         ?PR?MAIN?LEDMARQUEE
+            CODE    0840H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\LEDMarquee (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?LEDMARQUEE
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\LEDMarquee (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0840H         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2021  15:04:52  PAGE 2
+
+
+  C:0843H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0840H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0840H         LINE#         133
+  C:0842H         LINE#         134
+  C:0843H         LINE#         135
+  C:0844H         LINE#         136
+  C:0846H         LINE#         185
+  C:0849H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        LEDMARQUEE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:0800H         PUBLIC        main
+  -------         PROC          MAIN
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0005H         SYMBOL        j
+  -------         ENDDO         
+  C:0800H         LINE#         2
+  C:0800H         LINE#         3
+  C:0800H         LINE#         6
+  C:0803H         LINE#         7
+  C:0803H         LINE#         8
+  C:0803H         LINE#         9
+  C:0805H         LINE#         10
+  C:0805H         LINE#         11
+  C:0813H         LINE#         12
+  C:081BH         LINE#         13
+  C:081FH         LINE#         14
+  C:0827H         LINE#         15
+  C:0827H         LINE#         16
+  C:0835H         LINE#         17
+  C:083DH         LINE#         18
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        LEDMARQUEE
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 004FH BYTE ( 3%) *
+******************************************************************************
+
+Program Size: data=9.0 xdata=0 code=79
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
