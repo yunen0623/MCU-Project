@@ -1,0 +1,210 @@
+C51 COMPILER V9.54   8051_AT24C256B_EEPROM                                                 01/11/2022 22:35:26 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 8051_AT24C256B_EEPROM
+OBJECT MODULE PLACED IN .\Objects\8051-AT24C256B-EEPROM.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE 8051-AT24C256B-EEPROM.c OMF2 OPTIMIZE(8,SPEED) BROWSE DEBUG PRINT(.\List
+                    -ings\8051-AT24C256B-EEPROM.lst) TABS(2) OBJECT(.\Objects\8051-AT24C256B-EEPROM.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          sbit scl = P3^6;
+   4          sbit sda = P3^7;
+   5          unsigned char coding[8]={0x48,0x65,0x6c,0x6c,0x6F,0x21,0x0D,0x0A};//??0-F??
+   6          
+   7          void Delay_10us(unsigned int time)
+   8          {
+   9   1        while(time--);
+  10   1      }
+  11          
+  12          void I2c_Delay()
+  13          {
+  14   1        Delay_10us(1);
+  15   1      }
+  16          
+  17          void I2c_Start()
+  18          {
+  19   1        sda = 1;
+  20   1        scl = 1;
+  21   1        I2c_Delay();
+  22   1        sda = 0;    
+  23   1        I2c_Delay();
+  24   1        scl = 0;
+  25   1      }
+  26          
+  27          void I2c_Stop()
+  28          {
+  29   1        scl = 0;
+  30   1        I2c_Delay(); 
+  31   1        sda = 0;
+  32   1        scl = 1;
+  33   1        I2c_Delay(); 
+  34   1        sda = 1;    
+  35   1        I2c_Delay(); 
+  36   1      }
+  37          
+  38          void I2c_Ack()
+  39          {
+  40   1        scl = 0;
+  41   1        sda = 0;     
+  42   1        I2c_Delay();
+  43   1        scl = 1;
+  44   1        I2c_Delay(); 
+  45   1        scl = 0;
+  46   1      }
+  47          
+  48          void I2c_No_Ack()
+  49          {
+  50   1        scl = 0;
+  51   1        sda = 1;     
+  52   1        I2c_Delay();
+  53   1        scl = 1;
+  54   1        I2c_Delay(); 
+C51 COMPILER V9.54   8051_AT24C256B_EEPROM                                                 01/11/2022 22:35:26 PAGE 2   
+
+  55   1        scl = 0;
+  56   1      }
+  57          
+  58          unsigned char I2c_Wait_Ack()
+  59          {
+  60   1        unsigned char ack = 0;
+  61   1        sda = 1;
+  62   1        scl = 0;      
+  63   1        I2c_Delay();
+  64   1        scl = 1;
+  65   1        I2c_Delay(); 
+  66   1        if(sda == 0) 
+  67   1          ack = 1;
+  68   1        else 
+  69   1          ack = 0;
+  70   1        scl = 0;
+  71   1        return ack;
+  72   1      }
+  73          
+  74          void I2c_Write_Byte(unsigned char dat)
+  75          {
+  76   1        unsigned char i = 0;
+  77   1        
+  78   1        
+  79   1        for(i = 0; i < 8; i++) 
+  80   1        {
+  81   2          scl = 0;  
+  82   2          I2c_Delay();
+  83   2          if(dat & 0x80)  
+  84   2            sda = 1;
+  85   2          else 
+  86   2            sda = 0;
+  87   2          scl = 1; 
+  88   2          I2c_Delay();    
+  89   2          dat <<= 1; 
+  90   2        }
+  91   1        scl = 0;
+  92   1      }
+  93          
+  94          unsigned char I2c_Read_Byte()
+  95          {
+  96   1        unsigned char dat = 0, i = 0;
+  97   1          
+  98   1        for(i = 0; i < 8; i++) 
+  99   1        {
+ 100   2          dat <<= 1;  
+ 101   2          scl = 0;  
+ 102   2          I2c_Delay();
+ 103   2          scl = 1;     
+ 104   2          I2c_Delay();
+ 105   2          if(sda)      
+ 106   2            dat |= 0x1;
+ 107   2        }
+ 108   1        scl = 0;
+ 109   1        return dat;
+ 110   1      }
+ 111          
+ 112          void At24c256_Write(unsigned char Paddr,unsigned char Waddr, unsigned char dat)
+ 113          {
+ 114   1        I2c_Start();
+ 115   1        I2c_Write_Byte(0xA0);
+ 116   1        I2c_Wait_Ack();  
+C51 COMPILER V9.54   8051_AT24C256B_EEPROM                                                 01/11/2022 22:35:26 PAGE 3   
+
+ 117   1        I2c_Write_Byte(Paddr); 
+ 118   1        I2c_Wait_Ack(); 
+ 119   1        I2c_Write_Byte(Waddr); 
+ 120   1        I2c_Wait_Ack();
+ 121   1        I2c_Write_Byte(dat);  
+ 122   1        I2c_Wait_Ack();
+ 123   1        I2c_Stop();
+ 124   1        Delay_10us(1000);    
+ 125   1      }
+ 126          
+ 127          unsigned char At24c256_Read(unsigned char addr)
+ 128          {
+ 129   1        unsigned char dat = 0, i = 0;
+ 130   1        I2c_Start();
+ 131   1        I2c_Write_Byte(0xA0); 
+ 132   1        I2c_Wait_Ack();       
+ 133   1        I2c_Write_Byte(addr); 
+ 134   1        I2c_Wait_Ack(); 
+ 135   1        I2c_Start();
+ 136   1        I2c_Write_Byte(0xA1); 
+ 137   1        I2c_Wait_Ack();       
+ 138   1        dat = I2c_Read_Byte(); 
+ 139   1        I2c_Wait_Ack(); 
+ 140   1        I2c_Stop();
+ 141   1        return dat;
+ 142   1      }
+ 143          
+ 144          void UART()
+ 145          {
+ 146   1        SCON=0x50; 
+ 147   1        PCON &= 0X7F; //SMOD=0
+ 148   1        TMOD |= 0X20; //Timer1¼Ò¦¡2
+ 149   1        TH1=TL1=0XFD; //Àj²v9600
+ 150   1        IE = 0X90;
+ 151   1        TR1 =1;        
+ 152   1      }
+ 153          
+ 154          void UARTInt(void) interrupt 4
+ 155          {
+ 156   1        if(TI)
+ 157   1        {
+ 158   2          TI=0;//Reset T1
+ 159   2        }
+ 160   1      }
+ 161          
+ 162          int main()
+ 163          { 
+ 164   1        unsigned char i = 0;
+ 165   1        Delay_10us(100);  
+ 166   1        UART();
+ 167   1        while(1)
+ 168   1        {
+ 169   2          for(i = 0; i < 8; i++)
+ 170   2          {
+ 171   3            //At24c256_Write(0,i,i);
+ 172   3            SBUF = coding[At24c256_Read(i)];
+ 173   3            Delay_10us(50000);    
+ 174   3          }
+ 175   2        }
+ 176   1      }
+
+
+C51 COMPILER V9.54   8051_AT24C256B_EEPROM                                                 01/11/2022 22:35:26 PAGE 4   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    315    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

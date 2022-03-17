@@ -1,0 +1,53 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: £gVision V5.14.2
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: dsf desktop, sdf, LIC=----
+ 
+Tool Versions:
+Toolchain:       PK51 Prof. Develpers Kit  Version: 9.54
+Toolchain Path:  C:\Keil_v5\C51\BIN
+C Compiler:      C51.exe V9.54
+Assembler:       A51.exe V8.02c
+Linker/Locator:  LX51.exe V4.66.41.0
+Library Manager: LIBX51.exe V4.30.1.0
+Hex Converter:   OHX51.exe V1.45.0.0
+CPU DLL:         S8051.DLL V3.100.0.0
+Dialog DLL:      DP51.DLL V2.62.0.1 
+<h2>Project:</h2>
+D:\4.MCU&CAN-Bus\8051-AT24C256B\8051-AT24C256B-EEPROM.uvproj
+Project File Date:  01/11/2022
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling 8051-AT24C256B-EEPROM.c...
+compiling Test.c...
+linking...
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  UARTInt
+    MODULE:  .\Objects\Test.obj (TEST)
+   DEFINED:  .\Objects\8051-AT24C256B-EEPROM.obj (8051_AT24C256B_EEPROM)
+*** ERROR L104: MULTIPLE PUBLIC DEFINITIONS
+    SYMBOL:  main
+    MODULE:  .\Objects\Test.obj (TEST)
+   DEFINED:  .\Objects\8051-AT24C256B-EEPROM.obj (8051_AT24C256B_EEPROM)
+*** ERROR L102: EXTERNAL ATTRIBUTE MISMATCH
+    SYMBOL:  main
+    MODULE:  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+   DEFINED:  .\Objects\8051-AT24C256B-EEPROM.obj (8051_AT24C256B_EEPROM)
+*** WARNING L30: MEMORY SPACE OVERLAP
+    FROM:    C:000023H   
+    TO:      C:000026H   
+*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
+    SYMBOL:  main
+    MODULE:  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+    ADDRESS: 100095FH
+Program Size: data=44.0 xdata=0 const=0 code=1033
+Target not created.
+</pre>
+</body>
+</html>

@@ -1,0 +1,208 @@
+C51 COMPILER V9.54   TEST                                                                  01/11/2022 22:35:26 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\Objects\Test.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE C:\Users\z2253\Desktop\Test.c OMF2 OPTIMIZE(8,SPEED) BROWSE DEBUG PRINT(
+                    -.\Listings\Test.lst) TABS(2) OBJECT(.\Objects\Test.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #define LED P1
+   3          #define DataLengthG 7
+   4          #define DataLengthR 5
+   5          #define TH 76 //(65536-46080)/256
+   6          #define TL 0  //(65536-46080)%256
+   7          void delay1ms (int);
+   8          unsigned char TxDataG[]={0x47,0x72,0x65,0x65,0x6E,0x0D,0x0A};  //Green
+   9          unsigned char TxDataR[]={0x52,0x65,0x64,0x0D,0x0A};//Red
+  10          unsigned char iTxCount=1;
+  11          unsigned char iCount=0;
+  12          unsigned char RxData;
+  13          unsigned char IfTx=0;
+  14          unsigned char mode1count = 0;
+  15          
+  16          unsigned char ledmode = 0;
+  17          int t,i,k;
+  18          main()
+  19          {
+  20   1       IE=0x93;  //開啟INT0 UART TIMER0
+  21   1       IT0=0; // t緣觸發
+  22   1       IP=0x10;  //UART為最高優先權
+  23   1       TMOD|=0x21;  //Timer0 GATE=0,CT1=0,Mode1=1 //Timer1模式2
+  24   1       TH0=TH; //0.05s中斷一次(11.0592Mhz)
+  25   1       TL0=TL;
+  26   1       SCON|=0x50;  //串列模式1
+  27   1       PCON&=0x7F;  //SMOD=0
+  28   1       TH1=TL1=0XFD;  //鮑率9600
+  29   1       TR0=1;  //Timer0中斷開始
+  30   1       TR1=1;  //UART Timer1開始
+  31   1       while(1);
+  32   1      }
+  33          void INT0Int(void) interrupt 0
+  34          {
+  35   1       int i;
+  36   1       for(i=0;i<5;i++)
+  37   1       {
+  38   2        LED=0xED;
+  39   2        delay1ms(250);
+  40   2        LED=0xFF;
+  41   2        delay1ms(250);
+  42   2       }
+  43   1      }
+  44          void timer0(void) interrupt 1
+  45          {
+  46   1       TH0=TH;
+  47   1       TL0=TL;
+  48   1        if(ledmode == 0)
+  49   1        {
+  50   2          if(++iCount>=20)
+  51   2        {
+  52   3         iCount=0;
+  53   3         t+=1;
+  54   3         if(t>=20)
+C51 COMPILER V9.54   TEST                                                                  01/11/2022 22:35:26 PAGE 2   
+
+  55   3          {
+  56   4           t=0;
+  57   4          }
+  58   3        }
+  59   2       if(t>0&&t<=5)
+  60   2        {
+  61   3         LED=0xDE;
+  62   3        }
+  63   2       else if(t>5&&t<=8)
+  64   2        {
+  65   3         LED=0xDD;
+  66   3         }
+  67   2       else if(t>8&&t<=10)
+  68   2        {
+  69   3         LED=0xDB;
+  70   3         }
+  71   2       else if(t>10&&t<=15)
+  72   2        {
+  73   3         LED=0XF3;
+  74   3        }
+  75   2       else if(t>15&&t<=18)
+  76   2        {
+  77   3         LED=0XEB;
+  78   3        }
+  79   2       else if(t>18&&t<=20)
+  80   2        {
+  81   3         LED=0xDB;
+  82   3         }
+  83   2        }
+  84   1        else
+  85   1        {
+  86   2          if(IfTx == 1)
+  87   2          {
+  88   3            if(++mode1count>=20)
+  89   3            {
+  90   4              mode1count=0;
+  91   4              k++;
+  92   4              if(k>=3)
+  93   4                k=0;
+  94   4              ledmode = 0;
+  95   4            }
+  96   3            else
+  97   3              LED=0xDE;
+  98   3          }
+  99   2          else if(IfTx == 2)
+ 100   2          {
+ 101   3            if(++mode1count>=20)
+ 102   3            {
+ 103   4              mode1count=0;
+ 104   4              k++;
+ 105   4              if(k>=3)
+ 106   4                k=0;
+ 107   4              ledmode = 0;
+ 108   4            }
+ 109   3            else
+ 110   3              LED=0xF3;
+ 111   3          }
+ 112   2          else
+ 113   2            ledmode = 0;
+ 114   2        }
+ 115   1       
+ 116   1      }
+C51 COMPILER V9.54   TEST                                                                  01/11/2022 22:35:26 PAGE 3   
+
+ 117          void UARTInt(void) interrupt 4
+ 118          {
+ 119   1       if(TI)
+ 120   1       {
+ 121   2        TI=0;
+ 122   2        if(IfTx==1)
+ 123   2        {
+ 124   3         iTxCount++;
+ 125   3         if(iTxCount==DataLengthG)
+ 126   3         {
+ 127   4          iTxCount=0;
+ 128   4          IfTx = 0;
+ 129   4         }
+ 130   3         else
+ 131   3          SBUF=TxDataG[iTxCount];
+ 132   3        }
+ 133   2         else if(IfTx==2)
+ 134   2         {   
+ 135   3          iTxCount++;
+ 136   3         if(iTxCount==DataLengthR)
+ 137   3          {
+ 138   4           iTxCount=0;
+ 139   4           IfTx = 0;
+ 140   4          }
+ 141   3          else
+ 142   3           SBUF=TxDataR[iTxCount];  
+ 143   3        }
+ 144   2       }
+ 145   1       if(RI)
+ 146   1       {
+ 147   2        RI=0;
+ 148   2        RxData=SBUF;
+ 149   2        if(RxData=='g')
+ 150   2        {
+ 151   3         IfTx=1;
+ 152   3         //LED=0xDE;
+ 153   3         SBUF=TxDataG[0];
+ 154   3          ledmode = 1;
+ 155   3         //iTxCount++;
+ 156   3        } 
+ 157   2        else if(RxData=='r')
+ 158   2        {
+ 159   3         IfTx=2;
+ 160   3         //LED=0xF3;
+ 161   3         SBUF=TxDataR[0];
+ 162   3          ledmode = 1;
+ 163   3         //iTxCount++;
+ 164   3        }
+ 165   2        else 
+ 166   2         IfTx=0;
+ 167   2       }
+ 168   1      }
+ 169          void delay1ms(int x)
+ 170          {
+ 171   1       int i,j;
+ 172   1       for(i=0;i<x;i++)
+ 173   1        for(j=0;j<120;j++);
+ 174   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    628    ----
+C51 COMPILER V9.54   TEST                                                                  01/11/2022 22:35:26 PAGE 4   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     24       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
